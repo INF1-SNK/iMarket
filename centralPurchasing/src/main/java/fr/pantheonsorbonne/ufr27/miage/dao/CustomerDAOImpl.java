@@ -1,7 +1,6 @@
 package fr.pantheonsorbonne.ufr27.miage.dao;
 
 import fr.pantheonsorbonne.ufr27.miage.exception.CustomerNotFoundException;
-import fr.pantheonsorbonne.ufr27.miage.model.Customer;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.EntityManager;

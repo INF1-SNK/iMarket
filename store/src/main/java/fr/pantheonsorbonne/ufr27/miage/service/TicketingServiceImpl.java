@@ -9,9 +9,6 @@ import fr.pantheonsorbonne.ufr27.miage.dao.CustomerDAO;
 import fr.pantheonsorbonne.ufr27.miage.dao.NoSuchTicketException;
 import fr.pantheonsorbonne.ufr27.miage.dao.TicketDAO;
 
-import fr.pantheonsorbonne.ufr27.miage.model.Customer;
-import fr.pantheonsorbonne.ufr27.miage.model.Ticket;
-
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
