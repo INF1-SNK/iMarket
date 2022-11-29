@@ -10,11 +10,14 @@ public class PlanningDTO {
     int morningHours;
     int eveningHours;
 
+    String city;
+
     public PlanningDTO(int planningId, int totalHours, int morningHours, int eveningHours) {
         this.planningId = planningId;
         this.totalHours = totalHours;
         this.morningHours = morningHours;
         this.eveningHours = eveningHours;
+        this.city = "Paris";
     }
 
     public PlanningDTO() {
@@ -51,5 +54,5 @@ public class PlanningDTO {
     public void setEveningHours(int eveningHours) {
         this.eveningHours = eveningHours;
     }
-
+    public String getCity() { return city;}
 }
