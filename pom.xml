@@ -12,6 +12,7 @@
 		<module>humanResources</module>
 		<module>store</module>
 		<module>vendor</module>
+		<module>imarket-commons</module>
 </modules>
 
 </project>

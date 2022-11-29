@@ -1,61 +1,31 @@
+# Projet iMarket
+
 ## Objectifs du système à modéliser
 
-On propose de modéliser un système de réservation (master) de tickets pouvant supporter plusieurs vendeurs (vendor). Le système master gère les salles, les concerts, les différents artistes se produisant dans les concerts et la réservation des tickets alors que les vendeurs assurent la vente de billets. Chaque vendeur a un quota pour un concert donné, qui peut évoluer avec le temps.
-En cas d'annulation de concert, le système de réservation informe les vendors qui doivent contacter les clients (customers). Le master propose des services de validation de l'authenticité des tickets à l'entrée des concerts.
 
-Lors de la réservation de ticket, on a 2 phases:
-- le booking (réservation des places)
-- le ticketing (émission de billets sécurisés avec clé.)
+On propose de modéliser un système qui permettrait d’informatiser la gestion d’un magasin (MAG) pouvant gérer les ressources en termes de personnel avec la direction RH (DRH) et de marchandise avec le contact d’achat (CA) qui vas répondre à ces demandes en passant des commandes aux fournisseurs (FOURNISSEUR).
 
-Le vendor va demander au master via une API rest les concerts pour lesquels il possède un quota. Seuls ces concerts seront proposés à la vente au client.
-Le client spécifie ensuite le nombre de places assises et le nombre de places debout qu'il souhaite acheter. Le vendor interroge le master sur la disponibilité. Celui-ci va lui renvoyer des tickets transitionnels valables 10 minutes en cas de disponibilité de places.
-Le vendeur va ensuite renseigner les informations du client et les transmettre au master pour l'émission finale des tickets avec clé sécurisée qui sera transmise au client pour qu'il puisse entrer dans la salle.
-En cas d'annulation du concert, le master prévient les vendors (avec les informations des tickets à annuler et les emails des clients) le vendeur doit envoyer un email au client pour chaque ticket annulé.
+Le MAG gère les plannings des employées en prenant en compte les contraintes jours/horaires/CP/absences des différents salarié.  Lorsqu’une anomalie est détectée (impossible de respecter le quota jour/hommes) un mail contenant un fichier PDF qui est envoyé à la direction RH afin qu’ils soient alertés de la situation et puissent retourner un ou plusieurs CV.
 
-## Interfaces
+Le MAG gère également l’approvisionnement de son stock en envoyant tous les 2 jours au Contact d’Achat un fichier JSON.
+-	Contenant le stock actuel de son magasin (possibilité de faire une fonction qui calcule le nombre de produits à envoyer)
+     OU
+-	Contenant les produits en rupture de son magasin
 
-```
-artist->master: POST venue
-vendor->master: GET Gigs
-master->vendor: Collection<Gigs>
+La DRH gère les candidatures reçues en stockant les CV des candidats dans sa base et lorsqu’elle reçoit une demande de personnel elle retourne 5 CV correspondant aux postes recherchés. (Exemple : 5 CV contrats étudiants, 5 CV responsables etc…)
 
-Customer->vendor: cli:gig selection
+Le CA reçoit le stock de marchandises du magasin, traite le fichier en fonction de son stock national.
+-	SI le stock est suffisant on envoie directement les produit au magasin puis on vérifie que le stock national restant est > 100 colis (limiteColis)
+-	Sinon il envoi au fournisseur un fichier XML contenant les produits devant être livré au magasin ainsi que le nombre de colis à recevoir (nbColisDansStockNat = 2 * limiteColis).
 
-vendor->master: jms:booking
-alt booking successfull
-    master->vendor: transitional tickets
-    vendor->Customer: ticket purshase ok
-    Customer->vendor: cli:customer informations
-    
-    vendor->master: jms:ticketing
-    master->vendor: tickets
+Le Fournisseur reçoit un fichier XML contenant la liste des produits à envoyer au magasin, et retourne les produits qu’il possède.
 
-else booking unsuccessfull
-    master->vendor: no quota for gigs
-end
 
-opt venue cancellation
-    artist->master: DELETE venue
-    master->vendor: jms:topic:cancellation
-    vendor->Customer: smtp:cancellation email
-end
-```
-![](seqDiagram.png)
+### Hypothèses
 
-## Schéma relationnel
+-	Le fournisseur possède un stock infini.
+-	La demande de candidature est importante et on nécessite une demande de réponse direct pour avoir une communication synchrone.
 
-![](EER.png)
+### Diagramme de classe
 
-## Exigences fonctionnelles
-
-* le vendor NE DOIT proposer que les concerts pour lesquels il a un quota disponible, transmis par le master.
-* le vendor DOIT pouvoir effectuer les opérations de booking et ticketing
-* le master DOIT permettre à l'artiste d'annuler son concert.
-* le master DOIT informer le vendor en cas d'annulation de concert
-* le vendor DOIT informer les clients de l'annulation du concert par mail
-* le master DOIT proposer un service de validation de la clé du ticket, pour les contrôles aux entées.
-
-## Exigences non fonctionnelles
-
-* le booking et le ticketing, bien qu'étant des opérations synchrones, DOIVENT être fiables et donc utiliser le messaging
-* Lors de l'annulation de tickets, le master DOIT informer tous les vendors de l'annulation, de façon fiable.
+![Séparation en 4 microservices](diagramme_classe_init.jpg)
