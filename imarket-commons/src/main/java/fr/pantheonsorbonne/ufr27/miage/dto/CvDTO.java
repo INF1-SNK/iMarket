@@ -1,5 +1,8 @@
 package fr.pantheonsorbonne.ufr27.miage.dto;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
 public class CvDTO {
     String firstName;
     String lastName;
@@ -17,6 +20,9 @@ public class CvDTO {
         this.contractType = contractType;
         this.weeklyHours = weeklyHours;
         this.email = email;
+    }
+
+    public CvDTO() {
     }
 
     public String getFirstName() {

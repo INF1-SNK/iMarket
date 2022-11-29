@@ -2,6 +2,7 @@ package fr.pantheonsorbonne.ufr27.miage.service;
 
 import fr.pantheonsorbonne.ufr27.miage.dao.CvDAO;
 import fr.pantheonsorbonne.ufr27.miage.dto.CvDTO;
+import fr.pantheonsorbonne.ufr27.miage.dto.PlanningDTO;
 import fr.pantheonsorbonne.ufr27.miage.model.*;
 
 import javax.enterprise.context.RequestScoped;
@@ -10,6 +11,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.Collection;
 import java.util.LinkedList;
+import java.util.List;
 
 @RequestScoped
 public class CandidatureServiceImpl implements CandidatureService {
@@ -19,18 +21,18 @@ public class CandidatureServiceImpl implements CandidatureService {
     @Inject
     CvDAO cvDAO;
 
+    PlanningDTO planningDTO;
+
 
     @Override
-    public Collection<CvDTO> getCandidatures() {
+    public List<CvDTO> getCandidatures() {
         Collection<CvDTO> candidatures = new LinkedList<>();
         for (Cv cv : cvDAO.getAllCv()) {
-            if(cv.getLocalisation() == "Paris"){
-                if( cv.getAge() > 18 && cv.getAge() < 23 ||  cv.getAge() > 50  ){
-                    candidatures.add(new CvDTO(cv.getFirstName(), cv.getLastName(), cv.getLocalisation(), cv.getAge(),cv.getContractType(), cv.getWeeklyHours(), cv.getEmail() ));
-                }
+            if(cv.getLocalisation().equals("PARIS")){
+                candidatures.add(new CvDTO(cv.getFirstName(), cv.getLastName(), cv.getLocalisation(), cv.getAge(),cv.getContractType(), cv.getWeeklyHours(), cv.getEmail() ));
             }
         }
-        return candidatures;
+        return (List<CvDTO>) candidatures;
     }
 
 }

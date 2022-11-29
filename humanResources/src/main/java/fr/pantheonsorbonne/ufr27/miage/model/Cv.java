@@ -46,6 +46,10 @@ public class Cv {
     public Cv(String name, String firstName, String lastName, Integer cvAge, String localisation, Integer age, String email) {
     }
 
+    public Cv() {
+
+    }
+
     public Integer getId() {
         return id;
     }

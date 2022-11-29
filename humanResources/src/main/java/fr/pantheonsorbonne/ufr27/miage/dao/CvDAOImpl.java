@@ -2,11 +2,11 @@ package fr.pantheonsorbonne.ufr27.miage.dao;
 
 import fr.pantheonsorbonne.ufr27.miage.model.Cv;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.util.Collection;
 import java.util.List;
-
+@ApplicationScoped
 public class CvDAOImpl implements CvDAO {
 
     @PersistenceContext
@@ -18,7 +18,7 @@ public class CvDAOImpl implements CvDAO {
     }
 
     @Override
-    public Collection<Cv> getAllCv() {
+    public List<Cv> getAllCv() {
         return (List<Cv>) em.createQuery("SELECT c from Cv c where c.id > 0").getResultList();
     }
 }
