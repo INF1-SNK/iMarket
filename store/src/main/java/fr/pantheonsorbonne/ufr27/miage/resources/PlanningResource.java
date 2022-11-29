@@ -1,6 +1,7 @@
 package fr.pantheonsorbonne.ufr27.miage.resources;
 
 import fr.pantheonsorbonne.ufr27.miage.dto.PlanningDTO;
+import fr.pantheonsorbonne.ufr27.miage.exception.PlanningNotFoundException;
 import fr.pantheonsorbonne.ufr27.miage.service.PlanningService;
 
 import javax.inject.Inject;
@@ -16,10 +17,15 @@ public class PlanningResource {
     @Inject
     PlanningService planningService;
 
-    @Path("planning/{planningId}")
+    @Path("{planningId}")
     @GET
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public PlanningDTO getPlanning(@PathParam("planningId") int planningId) {
-        return planningService.getPlanningById(planningId);
+        try {
+            return planningService.getPlanningById(planningId);
+        }
+        catch (PlanningNotFoundException e){
+            return null;
+        }
     }
 }
