@@ -6,4 +6,6 @@ import fr.pantheonsorbonne.ufr27.miage.exception.PlanningNotFoundException;
 public interface PlanningService {
 
     PlanningDTO getPlanningById(int id) throws PlanningNotFoundException;
+
+    PlanningDTO getLastPlanning();
 }

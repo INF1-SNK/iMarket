@@ -17,10 +17,16 @@ public class PlanningResource {
     @Inject
     PlanningService planningService;
 
-    @Path("{planningId}")
+    @Path("show")
     @GET
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public PlanningDTO getPlanning(@PathParam("planningId") int planningId) {
+    public PlanningDTO getLastPlanning(){
+        return planningService.getLastPlanning();
+    }
+    @Path("show/{planningId}")
+    @GET
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public PlanningDTO getPlanningById(@PathParam("planningId") int planningId) {
         try {
             return planningService.getPlanningById(planningId);
         }

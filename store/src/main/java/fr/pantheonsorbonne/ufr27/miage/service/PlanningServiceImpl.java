@@ -1,6 +1,7 @@
 package fr.pantheonsorbonne.ufr27.miage.service;
 
 import fr.pantheonsorbonne.ufr27.miage.dao.PlanningDAO;
+import fr.pantheonsorbonne.ufr27.miage.dto.EmployeeDTO;
 import fr.pantheonsorbonne.ufr27.miage.dto.PlanningDTO;
 import fr.pantheonsorbonne.ufr27.miage.exception.PlanningNotFoundException;
 import fr.pantheonsorbonne.ufr27.miage.model.Employee;
@@ -10,10 +11,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @ApplicationScoped
 public class PlanningServiceImpl implements PlanningService{
@@ -22,21 +20,38 @@ public class PlanningServiceImpl implements PlanningService{
     PlanningDAO planningDAO;
     @Override
     public PlanningDTO getPlanningById(int id) throws PlanningNotFoundException {
-        Collection<Employee> employeeCollection = planningDAO.getEmployeesFromPlanning(id);
         Planning planning = planningDAO.get(id);
         if (planning != null) {
-            int morningHours = 0;
-            int eveningHours = 0;
-            for (Employee e :
-                    employeeCollection) {
-                if (e.getTimeOfDay().equals("morning")) {
-                    morningHours += e.getWeeklyHours();
-                } else if (e.getTimeOfDay().equals("evening")) {
-                    eveningHours += e.getWeeklyHours();
-                }
-            }
-            return new PlanningDTO(id, planning.getTotalHours(), morningHours, eveningHours);
+            return getPlanningDTO(planning);
         }
         throw new PlanningNotFoundException("planning not found");
+    }
+
+    private PlanningDTO getPlanningDTO(Planning planning) {
+        Collection<Employee> morningEmployees = planningDAO.getTimeOfDayEmployees(planning.getId(), "morning");
+        Collection<Employee> eveningEmployees = planningDAO.getTimeOfDayEmployees(planning.getId(), "evening");
+        int morningHours = calculateWorkingHours(morningEmployees);
+        int eveningHours = calculateWorkingHours(eveningEmployees);
+        Collection<EmployeeDTO> employeeDTOCollection = new ArrayList<>();
+        for (Employee e :
+                planning.getEmployees()) {
+            employeeDTOCollection.add(new EmployeeDTO(e.getFamilyName(), e.getAge(), e.getContractType(), e.getWeeklyHours(), e.getTimeOfDay(), e.getPosition()));
+        }
+        return new PlanningDTO(planning.getId(), planning.getTotalHours(), morningHours, eveningHours, morningEmployees.size(), eveningEmployees.size(), employeeDTOCollection);
+    }
+
+    @Override
+    public PlanningDTO getLastPlanning() {
+        Planning planning = planningDAO.getLastPlanning();
+        return getPlanningDTO(planning);
+    }
+
+    public int calculateWorkingHours(Collection<Employee> employeeCollection){
+        int hours = 0;
+        for (Employee e :
+                employeeCollection) {
+            hours += e.getWeeklyHours();
+        }
+        return hours;
     }
 }
