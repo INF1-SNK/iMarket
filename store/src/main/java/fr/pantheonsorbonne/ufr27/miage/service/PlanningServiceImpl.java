@@ -19,12 +19,19 @@ public class PlanningServiceImpl implements PlanningService{
     @Inject
     PlanningDAO planningDAO;
     @Override
-    public PlanningDTO getPlanningById(int id) throws PlanningNotFoundException {
+    public PlanningDTO getPlanningById(int id) {
         Planning planning = planningDAO.get(id);
-        if (planning != null) {
-            return getPlanningDTO(planning);
+        if(planning == null){
+            return null;
         }
-        throw new PlanningNotFoundException("planning not found");
+        return getPlanningDTO(planning);
+
+    }
+
+    @Override
+    public PlanningDTO getLastPlanning() {
+        Planning planning = planningDAO.getLastPlanning();
+        return getPlanningDTO(planning);
     }
 
     private PlanningDTO getPlanningDTO(Planning planning) {
@@ -38,12 +45,6 @@ public class PlanningServiceImpl implements PlanningService{
             employeeDTOCollection.add(new EmployeeDTO(e.getFamilyName(), e.getAge(), e.getContractType(), e.getWeeklyHours(), e.getTimeOfDay(), e.getPosition()));
         }
         return new PlanningDTO(planning.getId(), planning.getTotalHours(), morningHours, eveningHours, morningEmployees.size(), eveningEmployees.size(), employeeDTOCollection);
-    }
-
-    @Override
-    public PlanningDTO getLastPlanning() {
-        Planning planning = planningDAO.getLastPlanning();
-        return getPlanningDTO(planning);
     }
 
     public int calculateWorkingHours(Collection<Employee> employeeCollection){
