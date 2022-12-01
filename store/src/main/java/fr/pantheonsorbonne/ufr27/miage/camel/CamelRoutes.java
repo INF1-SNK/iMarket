@@ -2,7 +2,6 @@ package fr.pantheonsorbonne.ufr27.miage.camel;
 
 
 import org.apache.camel.CamelContext;
-
 import org.apache.camel.builder.RouteBuilder;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
@@ -16,6 +15,7 @@ public class CamelRoutes extends RouteBuilder {
     @ConfigProperty(name = "fr.pantheonsorbonne.ufr27.miage.jmsPrefix")
     String jmsPrefix;
 
+
     @Inject
     CamelContext camelContext;
 
@@ -24,8 +24,10 @@ public class CamelRoutes extends RouteBuilder {
 
         camelContext.setTracing(true);
 
-        from("direct:statutStockStore" + jmsPrefix + "in")
-                .unmarshal().csv().log("statut stock envoyee ${body}");
 
+        from("direct:statutStockStore")
+                .marshal().csv().log("statut stock recu ${body}")
+                .to("jms:statutStockStore" + jmsPrefix + "in");
     }
+
 }
