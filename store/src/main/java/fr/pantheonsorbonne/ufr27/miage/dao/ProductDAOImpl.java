@@ -22,7 +22,7 @@ public class ProductDAOImpl implements ProductDAO{
     }
 
     @Override
-    public Collection<Product> getAllProducts(String id) {
+    public Collection<Product> getProductByID(String id) {
             Product products = em.find(Product.class, id);
         return (Collection<Product>) products;
     }

@@ -7,6 +7,6 @@ import java.util.Collection;
 public interface ProductDAO {
 
     Product createNewProduct(String name, String type, double price);
-    Collection<Product> getAllProducts(String id);
+    Collection<Product> getProductByID(String id);
 
 }
