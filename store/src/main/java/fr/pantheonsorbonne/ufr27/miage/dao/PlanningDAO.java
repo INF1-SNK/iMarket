@@ -8,4 +8,8 @@ import java.util.Collection;
 public interface PlanningDAO {
     Planning get(int id);
     Collection<Employee> getEmployeesFromPlanning(int id);
+
+    Collection<Employee> getTimeOfDayEmployees(int id, String timeOfDay);
+
+    Planning getLastPlanning();
 }
