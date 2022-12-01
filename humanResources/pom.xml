@@ -39,7 +39,7 @@
     <dependencies>
         <dependency>
             <groupId>fr.pantheonsorbonne.ufr27.miage</groupId>
-            <artifactId>ticket-commons</artifactId>
+            <artifactId>imarket-commons</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
@@ -85,6 +85,10 @@
         <dependency>
             <groupId>org.apache.camel.quarkus</groupId>
             <artifactId>camel-quarkus-bean</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.camel.quarkus</groupId>
+            <artifactId>camel-quarkus-csv</artifactId>
         </dependency>
         <dependency>
             <groupId>io.quarkus</groupId>
