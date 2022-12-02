@@ -26,8 +26,9 @@ public class CamelRoutes extends RouteBuilder {
         camelContext.setTracing(true);
 
 
-        from("direct:statut").log("statut stock emis ${body}")
+        from("direct:statut")
                 .marshal().json()
+                .log("statut stock emis ${body}")
                 .to("jms:queue/statutStockStore");
     }
 

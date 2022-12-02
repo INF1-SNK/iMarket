@@ -4,6 +4,7 @@ import fr.pantheonsorbonne.ufr27.miage.camel.StoreStockGateway;
 import fr.pantheonsorbonne.ufr27.miage.service.StoreStockService;
 import io.quarkus.runtime.ShutdownEvent;
 import io.quarkus.runtime.StartupEvent;
+import org.apache.camel.CamelContext;
 import org.apache.camel.ProducerTemplate;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -29,6 +30,9 @@ public class StockProducer implements Runnable {
     @Inject
     StoreStockService storeStockService;
 
+    @Inject
+    CamelContext context;
+
     //planificateur d'exécution de tache
     private final ScheduledExecutorService scheduler = new ScheduledThreadPoolExecutor(1);
 
@@ -42,9 +46,6 @@ public class StockProducer implements Runnable {
 
     @Override
     public void run() {
-        try (JMSContext context = connectionFactory.createContext(Session.AUTO_ACKNOWLEDGE)) {
-            Message msg = context.createTextMessage((storeStockService.getStockFromProductByID(1).getProducts()).toString());
-            context.createProducer().send(context.createQueue("direct:statut"), msg);
-        }
+        context.createProducerTemplate().sendBody("direct:statut",storeStockService.getStockFromProductByID(1).getProducts());
     }
 }
