@@ -5,6 +5,7 @@ import fr.pantheonsorbonne.ufr27.miage.model.StoreStock;
 import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +21,7 @@ public class StoreStockDAOImpl implements StoreStockDAO {
         return em.find(StoreStock.class, storeStockID);
     }
 
+    @Transactional
     @Override
     public Map<String, Integer> getAmmountOfProducts(int storeStockID) {
         Map<String, Integer> result = new HashMap<>();
