@@ -27,9 +27,8 @@ public class CamelRoutes extends RouteBuilder {
 
 
         from("direct:statut")
-                .marshal().json()
+                .marshal().csv()
                 .log("statut stock emis ${body}")
                 .to("jms:queue/statutStockStore");
     }
-
 }

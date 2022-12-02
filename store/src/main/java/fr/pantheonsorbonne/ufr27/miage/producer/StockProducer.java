@@ -18,12 +18,12 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-//cette classe est un singleton
-//elle implémente l'interface Runnable qui spécifie qu'elle peut être exécutée par un scheduler
+//Classe:Singleton
+//StockProducer implemente l'interface Runnable qui s'execute sous un scheduler
 @ApplicationScoped
 public class StockProducer implements Runnable {
 
-    //nous récupérons à l'aide de CDI une fabrique de connexions JMS
+    //Recuperation grace a CDI d'une fabrique de connexions JMS
     @Inject
     ConnectionFactory connectionFactory;
 
@@ -33,7 +33,7 @@ public class StockProducer implements Runnable {
     @Inject
     CamelContext context;
 
-    //planificateur d'exécution de tache
+    //Planificateur de tache
     private final ScheduledExecutorService scheduler = new ScheduledThreadPoolExecutor(1);
 
     void onStart(@Observes StartupEvent ev) {
@@ -44,6 +44,7 @@ public class StockProducer implements Runnable {
         scheduler.shutdown();
     }
 
+    //Envoie du stock du magasin vers la queue "direct:statut"
     @Override
     public void run() {
         context.createProducerTemplate().sendBody("direct:statut",storeStockService.getStockFromProductByID(1).getProducts());
