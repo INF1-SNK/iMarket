@@ -19,15 +19,16 @@ public class CamelRoutes extends RouteBuilder {
     @Inject
     CamelContext camelContext;
 
+
     @Override
     public void configure() throws Exception {
 
         camelContext.setTracing(true);
 
 
-        from("direct:statutStockStore")
-                .marshal().csv().log("statut stock recu ${body}")
-                .to("jms:statutStockStore" + jmsPrefix + "in");
+        from("direct:statut").log("statut stock emis ${body}")
+                .marshal().json()
+                .to("jms:queue/statutStockStore");
     }
 
 }

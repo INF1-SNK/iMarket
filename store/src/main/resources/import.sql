@@ -19,7 +19,7 @@ VALUES
     ('2023-01-02',84),
     ('2023-01-09',84);
 
-insert INTO Employee_Planning (employee_id,planning_id)
+INSERT INTO Employee_Planning (employee_id,planning_id)
 VALUES
     (1,1),
     (2,1),
@@ -31,3 +31,15 @@ VALUES
     (8,4),
     (9,4),
     (10,5);
+
+INSERT INTO Product (id,name, price, type)
+VALUES
+    (1,"avocado",0.89,"fruit");
+
+INSERT INTO StoreStock(id,store_num)
+VALUES
+    (1,15);
+
+INSERT INTO StoreStock_Product(storestock_id, product_id)
+VALUES
+    (1,1);

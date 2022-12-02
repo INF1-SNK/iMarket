@@ -3,6 +3,7 @@ package fr.pantheonsorbonne.ufr27.miage.model;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.LinkedHashSet;
+import java.util.Map;
 import java.util.Set;
 
 @Entity
@@ -21,6 +22,7 @@ public class StoreStock {
             joinColumns = @JoinColumn(name = "storestock_id"),
             inverseJoinColumns = @JoinColumn(name = "product_id"))
     private Set<Product> products = new LinkedHashSet<>();
+
 
     public Integer getId() {
         return id;

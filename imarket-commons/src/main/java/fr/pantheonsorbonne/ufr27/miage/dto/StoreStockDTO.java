@@ -5,14 +5,16 @@ import java.util.Objects;
 
 
 public class StoreStockDTO {
-    private final Integer storeNum;
-    private final Map<String, Integer> products;
+    private  Integer storeNum;
+    private  Map<String, Integer> products;
 
     public StoreStockDTO(Integer storeNum,  Map<String, Integer> products) {
         this.storeNum = storeNum;
         this.products = products;
     }
 
+    public StoreStockDTO() {
+    }
 
     public Integer getStoreNum() {
         return storeNum;

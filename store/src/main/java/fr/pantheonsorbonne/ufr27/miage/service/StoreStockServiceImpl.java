@@ -4,9 +4,11 @@ import fr.pantheonsorbonne.ufr27.miage.dao.StoreStockDAO;
 import fr.pantheonsorbonne.ufr27.miage.dto.StoreStockDTO;
 import fr.pantheonsorbonne.ufr27.miage.model.Product;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import java.util.Collection;
 
+@ApplicationScoped
 public class StoreStockServiceImpl implements StoreStockService {
 
     @Inject
@@ -15,7 +17,7 @@ public class StoreStockServiceImpl implements StoreStockService {
 
     @Override
     public StoreStockDTO getStockFromProductByID(int id) {
-        Collection<Product> productCollection = (Collection<Product>) storeStock.get(id).getProducts();
-        return (StoreStockDTO) productCollection;   
+
+        return new StoreStockDTO(1, storeStock.getAmmountOfProducts(id));
     }
 }
