@@ -2,6 +2,7 @@ package fr.pantheonsorbonne.ufr27.miage.dao;
 
 import fr.pantheonsorbonne.ufr27.miage.model.StoreStock;
 
+<<<<<<< HEAD
 import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -12,6 +13,11 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 @ApplicationScoped
+=======
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
+>>>>>>> ceb28d335ee739c36373c50ec8dc073ed6c4aed2
 public class StoreStockDAOImpl implements StoreStockDAO {
 
     @PersistenceContext
@@ -20,6 +26,7 @@ public class StoreStockDAOImpl implements StoreStockDAO {
     public StoreStock get (int storeStockID) {
         return em.find(StoreStock.class, storeStockID);
     }
+<<<<<<< HEAD
 
 
     @Override
@@ -35,4 +42,6 @@ public class StoreStockDAOImpl implements StoreStockDAO {
 
         return result;
     }
+=======
+>>>>>>> ceb28d335ee739c36373c50ec8dc073ed6c4aed2
 }

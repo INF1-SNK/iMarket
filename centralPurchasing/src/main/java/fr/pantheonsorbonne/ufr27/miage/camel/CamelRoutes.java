@@ -24,10 +24,15 @@ public class CamelRoutes extends RouteBuilder {
 
         camelContext.setTracing(true);
 
+<<<<<<< HEAD
         from("jms:queue/statutStockStore")
                 .unmarshal()
                 .csv()
                 .log("statut stock recu ${body}");
+=======
+        from("direct:statutStockStore" + jmsPrefix + "in")
+                .unmarshal().csv().log("statut stock envoyee ${body}");
+>>>>>>> ceb28d335ee739c36373c50ec8dc073ed6c4aed2
 
     }
 }
