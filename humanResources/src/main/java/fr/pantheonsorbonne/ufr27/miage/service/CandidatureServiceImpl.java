@@ -28,7 +28,7 @@ public class CandidatureServiceImpl implements CandidatureService {
     public List<CvDTO> getCandidatures() {
         Collection<CvDTO> candidatures = new LinkedList<>();
         for (Cv cv : cvDAO.getAllCv()) {
-            if(cv.getLocalisation().equals("PARIS")){
+            if(cv.getLocalisation().equals("Paris")){
                 candidatures.add(new CvDTO(cv.getFirstName(), cv.getLastName(), cv.getLocalisation(), cv.getAge(),cv.getContractType(), cv.getWeeklyHours(), cv.getEmail() ));
             }
         }
