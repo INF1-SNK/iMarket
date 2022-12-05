@@ -33,6 +33,7 @@ public class CandidatureServiceImpl implements CandidatureService {
 
     @Override
     public List<CvDTO> getCandidatures() {
+
         PlanningDTO planningDTO = getLastPlanningFromStore();
         if (cvIsNeeded(planningDTO)) {
             Collection<CvDTO> candidatures = new LinkedList<>();
