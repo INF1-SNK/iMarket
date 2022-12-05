@@ -37,7 +37,7 @@ public class StockProducer implements Runnable {
     private final ScheduledExecutorService scheduler = new ScheduledThreadPoolExecutor(1);
 
     void onStart(@Observes StartupEvent ev) {
-        scheduler.scheduleAtFixedRate(this, 0L, 5L, TimeUnit.SECONDS);
+        scheduler.scheduleAtFixedRate(this, 0L, 30L, TimeUnit.SECONDS);
     }
 
     void onStop(@Observes ShutdownEvent ev) {
@@ -47,6 +47,6 @@ public class StockProducer implements Runnable {
     //Envoie du stock du magasin vers la queue "direct:statut"
     @Override
     public void run() {
-        context.createProducerTemplate().sendBody("direct:statut",storeStockService.getStockFromProductByID(1).getProducts());
+        context.createProducerTemplate().sendBody("direct:statut",storeStockService.getStockFromProductByID(1));
     }
 }

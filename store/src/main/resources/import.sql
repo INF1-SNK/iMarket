@@ -44,13 +44,12 @@ VALUES
 
 INSERT INTO StoreStock(id,store_num)
 VALUES
-    (1,15),
-    (2,5),
-    (3,50),
-    (4,100),
-    (6,75),
-    (7,3);
-
-INSERT INTO StoreStock_Product(storestock_id, product_id)
-VALUES
     (1,1);
+
+INSERT INTO StoreStock_Product(storestock_id, product_id, quantity)
+VALUES
+    (1,1,150),
+    (1,2,550),
+    (1,3,82),
+    (1,4,105),
+    (1,5,100);

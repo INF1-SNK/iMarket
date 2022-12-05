@@ -26,8 +26,8 @@ public class CamelRoutes extends RouteBuilder {
 
 
         from("jms:queue/statutStockStore")
-                .log("statut stock recu ${body}")
+                .log("statut stock recu - ${body}")
                 .unmarshal()
-                .csv();
+                .json();
     }
 }
