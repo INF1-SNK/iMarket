@@ -6,10 +6,7 @@ import fr.pantheonsorbonne.ufr27.miage.exception.PlanningNotFoundException;
 import fr.pantheonsorbonne.ufr27.miage.service.PlanningService;
 
 import javax.inject.Inject;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 
@@ -19,16 +16,21 @@ public class PlanningResource {
     @Inject
     PlanningService planningService;
 
-    @Path("{planningId}")
+    @Path("show")
     @GET
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public PlanningDTO getPlanning(@PathParam("planningId") int planningId) {
-        try {
-            return planningService.getPlanningById(planningId);
+    public PlanningDTO getLastPlanning(){
+        return planningService.getLastPlanning();
+    }
+    @Path("show/{planningId}")
+    @GET
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public PlanningDTO getPlanningById(@PathParam("planningId") int planningId) {
+
+        if (planningService.getPlanningById(planningId) == null){
+            throw new NotFoundException();
         }
-        catch (PlanningNotFoundException e){
-            return null;
-        }
+        return planningService.getPlanningById(planningId);
     }
 
 }

@@ -23,8 +23,4 @@ public class CandidatureRessources {
     public List<CvDTO> getCv() {
         return service.getCandidatures();
     }
-
-
-
-
 }
