@@ -18,7 +18,7 @@ public class CvRessource {
     @Inject
     CandidatureService candidatureService;
 
-    @Path("showCvAccepted")
+    @Path("accepted")
     @GET
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public List<CvDTO> sendCv() {

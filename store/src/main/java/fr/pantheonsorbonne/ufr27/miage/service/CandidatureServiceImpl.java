@@ -8,6 +8,7 @@ import org.eclipse.microprofile.rest.client.inject.RestClient;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.LinkedList;
 @ApplicationScoped
 public class CandidatureServiceImpl implements CandidatureService {
@@ -19,10 +20,8 @@ public class CandidatureServiceImpl implements CandidatureService {
     //Verifie si on envoi ou pas les cv
     @Override
     public Collection<CvDTO> sendCandidatAccepted() {
-        Collection<CvDTO> candidatures = new LinkedList<>();
-
         if(candidatureHRService.getCv().size() == 0){
-            return null;
+            return Collections.emptyList();
         }
         return chooseCV();
     }

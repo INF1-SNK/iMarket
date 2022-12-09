@@ -1,6 +1,8 @@
 package fr.pantheonsorbonne.ufr27.miage.dto;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Collection;
 
@@ -21,6 +23,7 @@ public class PlanningDTO {
         this.employeeDTOCollection = employeeDTOCollection;
     }
 
+    @JsonProperty("employees")
     Collection<EmployeeDTO> employeeDTOCollection;
     String city;
 

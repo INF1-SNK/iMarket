@@ -47,6 +47,6 @@ public class StockProducer implements Runnable {
     //Envoie du stock du magasin vers la queue "direct:statut"
     @Override
     public void run() {
-        context.createProducerTemplate().sendBody("direct:statut",storeStockService.getStockFromProductByID(1));
+        context.createProducerTemplate().sendBody("direct:statut",storeStockService.getStockFromProductByID(1)); //TODO : injecter la propriété id
     }
 }

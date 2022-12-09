@@ -13,11 +13,11 @@ import javax.ws.rs.PathParam;
 public interface PlanningService {
 
 
-    @Path("show")
+    @Path("/latest")
     @GET
     PlanningDTO getLastPlanning();
 
-    @Path("show/{planningId}")
+    @Path("/{planningId}")
     @GET
     PlanningDTO getPlanningById(@PathParam("planningId") int planningId);
 }
