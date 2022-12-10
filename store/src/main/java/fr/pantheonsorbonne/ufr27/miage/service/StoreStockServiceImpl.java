@@ -2,6 +2,8 @@ package fr.pantheonsorbonne.ufr27.miage.service;
 
 import fr.pantheonsorbonne.ufr27.miage.dao.StoreStockDAO;
 import fr.pantheonsorbonne.ufr27.miage.dto.StoreStockDTO;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
@@ -12,8 +14,12 @@ public class StoreStockServiceImpl implements StoreStockService {
     StoreStockDAO storeStock;
 
 
+    @ConfigProperty(name = "fr.pantheonsorbonne.ufr27.miage.storeId")
+    Integer storeId;
+
+
     @Override
     public StoreStockDTO getStockFromProductByID(int id) {
-        return new StoreStockDTO(1, storeStock.getAmmountOfProducts(id));
+        return new StoreStockDTO(storeId, storeStock.getAmmountOfProducts(id));
     }
 }

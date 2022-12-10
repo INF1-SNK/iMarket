@@ -6,12 +6,13 @@ import io.quarkus.runtime.ShutdownEvent;
 import io.quarkus.runtime.StartupEvent;
 import org.apache.camel.CamelContext;
 import org.apache.camel.ProducerTemplate;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
+import org.springframework.beans.factory.annotation.Value;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import javax.jms.*;
-import javax.resource.spi.ConfigProperty;
 import java.io.IOException;
 import java.util.Random;
 import java.util.concurrent.ScheduledExecutorService;
@@ -33,6 +34,9 @@ public class StockProducer implements Runnable {
     @Inject
     CamelContext context;
 
+    @ConfigProperty(name = "fr.pantheonsorbonne.ufr27.miage.storeId")
+    Integer storeId;
+
     //Planificateur de tache
     private final ScheduledExecutorService scheduler = new ScheduledThreadPoolExecutor(1);
 
@@ -47,6 +51,6 @@ public class StockProducer implements Runnable {
     //Envoie du stock du magasin vers la queue "direct:statut"
     @Override
     public void run() {
-        context.createProducerTemplate().sendBody("direct:statut",storeStockService.getStockFromProductByID(1)); //TODO : injecter la propriété id
+        context.createProducerTemplate().sendBody("direct:statut",storeStockService.getStockFromProductByID(storeId)); //TODO : injecter la propriété id
     }
 }
