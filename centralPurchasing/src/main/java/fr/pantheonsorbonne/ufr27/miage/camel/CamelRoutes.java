@@ -1,6 +1,7 @@
 package fr.pantheonsorbonne.ufr27.miage.camel;
 
 
+import fr.pantheonsorbonne.ufr27.miage.service.StockService;
 import org.apache.camel.CamelContext;
 
 import org.apache.camel.builder.RouteBuilder;
@@ -19,6 +20,10 @@ public class CamelRoutes extends RouteBuilder {
     @Inject
     CamelContext camelContext;
 
+    @Inject
+    StockService StockService;
+
+
     @Override
     public void configure() throws Exception {
 
@@ -27,7 +32,9 @@ public class CamelRoutes extends RouteBuilder {
 
         from("jms:queue/statutStockStore")
                 .log("statut stock recu - ${body}")
-                .unmarshal()
-                .json();
+                .unmarshal().json()
+                .bean(StockService, "verifyStock")  //verifier si la quantite est ok
+                .log("statut stock bon - ${body} ");
+                //.to("jms:queue/StockIsGood");
     }
 }
