@@ -26,12 +26,10 @@ public class CandidatureServiceImpl implements CandidatureService {
         return chooseCV();
     }
 
-
-
     //Selectionner les Cv retenu
     public Collection<CvDTO> chooseCV(){
-        Collection<CvDTO> candidatures = new LinkedList<>();
 
+        Collection<CvDTO> candidatures = new LinkedList<>();
         for (CvDTO cv : candidatureHRService.getCv()) {
             if(cv.getLocalisation().equals("Paris")){
                 if(18 < cv.getAge() && (cv.getAge() < 26 || cv.getAge() > 55))

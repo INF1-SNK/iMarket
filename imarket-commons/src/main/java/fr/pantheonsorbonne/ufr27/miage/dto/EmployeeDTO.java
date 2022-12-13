@@ -5,6 +5,7 @@ import java.util.Objects;
 
 public class EmployeeDTO {
     private String familyName;
+    private String firstName;
     private Integer age;
 
     private String contractType;
@@ -14,8 +15,9 @@ public class EmployeeDTO {
 
     private String position;
 
-    public EmployeeDTO(String familyName, Integer age, String contractType, Integer weeklyHours, String timeOfDay, String position) {
+    public EmployeeDTO(String familyName,  String firstName, Integer age, String contractType, Integer weeklyHours, String timeOfDay, String position) {
         this.familyName = familyName;
+        this.firstName = firstName;
         this.age = age;
         this.contractType = contractType;
         this.weeklyHours = weeklyHours;
@@ -29,6 +31,8 @@ public class EmployeeDTO {
     public String getFamilyName() {
         return familyName;
     }
+
+    public String getFirstName() { return firstName;}
 
     public Integer getAge() {
         return age;
@@ -102,4 +106,7 @@ public class EmployeeDTO {
     public void setPosition(String position) {
         this.position = position;
     }
+
+    public void setFirstName(String firstName) { this.firstName = firstName; }
+
 }
