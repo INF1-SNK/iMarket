@@ -1,9 +1,6 @@
 package fr.pantheonsorbonne.ufr27.miage.model;
 
-import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -11,6 +8,16 @@ import javax.validation.constraints.NotNull;
 public class StorestockProduct {
     @EmbeddedId
     private StorestockProductId id;
+
+    @MapsId("storestockId")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "storestock_id", nullable = false)
+    private StoreStock storestock;
+
+    @MapsId("productId")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "product_id", nullable = false)
+    private Product product;
 
     @NotNull
     @Column(name = "quantity", nullable = false)
@@ -22,6 +29,22 @@ public class StorestockProduct {
 
     public void setId(StorestockProductId id) {
         this.id = id;
+    }
+
+    public StoreStock getStorestock() {
+        return storestock;
+    }
+
+    public void setStorestock(StoreStock storestock) {
+        this.storestock = storestock;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
     public Integer getQuantity() {

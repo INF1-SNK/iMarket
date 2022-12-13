@@ -1,7 +1,9 @@
 package fr.pantheonsorbonne.ufr27.miage.camel;
 
 
+import fr.pantheonsorbonne.ufr27.miage.dto.ProductDTO;
 import fr.pantheonsorbonne.ufr27.miage.dto.StoreStockDTO;
+import fr.pantheonsorbonne.ufr27.miage.service.StoreStockService;
 import org.apache.camel.CamelContext;
 import org.apache.camel.ProducerTemplate;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
@@ -19,12 +21,17 @@ public class StoreStockGateway {
     @Inject
     CamelContext camelContext;
 
-
+    @Inject
+    StoreStockService storeStockService;
     public void sendStockStatus(StoreStockDTO storeStockDTO) {
         try (ProducerTemplate producerTemplate = camelContext.createProducerTemplate()) {
-            producerTemplate.sendBody("direct:statut", storeStockDTO.getProducts());
+            producerTemplate.sendBody("direct:statut", storeStockDTO);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void updateStock(ProductDTO p){
+        storeStockService.updateStockOfProduct(p);
     }
 }

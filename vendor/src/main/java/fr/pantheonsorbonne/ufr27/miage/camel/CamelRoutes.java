@@ -42,11 +42,12 @@ public class CamelRoutes extends RouteBuilder {
                 .log("commande - ${body}")
                 .unmarshal().jacksonxml(ProductDTO.class)
                 .bean(commandHandler, "sendProductInfos")
+                .marshal().jacksonxml()
                 .to(ExchangePattern.InOut, "jms:queue:vendorInfos/"+jmsPrefix);
 
 
 
-        from("jms:queue:vendorInfos/"+jmsPrefix)
+        from("jms:queue:CAToVendorCommand/"+jmsPrefix)
                 .unmarshal().jacksonxml(CommandDTO.class)
                 .bean(commandHandler, "sendCommand")
                 .marshal().json()

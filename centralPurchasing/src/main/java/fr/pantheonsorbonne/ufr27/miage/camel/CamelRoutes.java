@@ -1,6 +1,7 @@
 package fr.pantheonsorbonne.ufr27.miage.camel;
 
 
+import fr.pantheonsorbonne.ufr27.miage.dto.StoreStockDTO;
 import fr.pantheonsorbonne.ufr27.miage.service.StockService;
 import org.apache.camel.CamelContext;
 
@@ -9,6 +10,7 @@ import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import java.util.Map;
 
 @ApplicationScoped
 public class CamelRoutes extends RouteBuilder {
@@ -29,12 +31,21 @@ public class CamelRoutes extends RouteBuilder {
 
         camelContext.setTracing(true);
 
-
-        from("jms:queue/statutStockStore")
+        from("jms:queue:statutStockStore/" + jmsPrefix)
                 .log("statut stock recu - ${body}")
-                .unmarshal().json()
-                .bean(StockService, "verifyStock")  //verifier si la quantite est ok
-                .log("statut stock bon - ${body} ");
-                //.to("jms:queue/StockIsGood");
+                .unmarshal().json(StoreStockDTO.class)
+                .bean(StockService, "verifyStock");
+
+        from("direct:sendCommandToStore")
+                .marshal().json()
+                .to("jms:queue:sendCommandToStore/"+jmsPrefix);
+
+        /*from("direct:sendCommandToVendor")
+                .marshal().jacksonxml()
+                .to("jms:topic:CACommands/"+jmsPrefix);
+
+        from("jms:queue:vendorInfos/"+jmsPrefix)
+                .unmarshal().jacksonxml()
+                .bean();*/
     }
 }

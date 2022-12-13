@@ -1,6 +1,9 @@
 package fr.pantheonsorbonne.ufr27.miage.dao;
 
+import fr.pantheonsorbonne.ufr27.miage.model.Product;
 import fr.pantheonsorbonne.ufr27.miage.model.StoreStock;
+import fr.pantheonsorbonne.ufr27.miage.model.StorestockProduct;
+import fr.pantheonsorbonne.ufr27.miage.model.StorestockProductId;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.EntityManager;
@@ -21,6 +24,7 @@ public class StoreStockDAOImpl implements StoreStockDAO {
         return em.find(StoreStock.class, storeStockID);
     }
 
+
     @Transactional
     @Override
     public Map<String, Integer> getAmmountOfProducts(int storeStockID) {
@@ -34,5 +38,21 @@ public class StoreStockDAOImpl implements StoreStockDAO {
         }
 
         return result;
+    }
+    @Transactional
+    @Override
+    public void updateStockOfProduct(String productName, int qty) {
+        Product p = (Product) em.createQuery("SELECT p FROM Product p WHERE p.name = ?1").setParameter(1, productName).getResultList().get(0);
+        StoreStock stock = get(1);
+        StorestockProduct sp = (StorestockProduct) em.createQuery("select sp from StorestockProduct sp where sp.product = ?1 and sp.storestock = ?2")
+                .setParameter(1, p)
+                .setParameter(2, stock)
+                .getResultList().get(0);
+
+        int base = sp.getQuantity();
+        sp.setQuantity(base+qty);
+
+        em.persist(sp);
+        em.flush();
     }
 }
