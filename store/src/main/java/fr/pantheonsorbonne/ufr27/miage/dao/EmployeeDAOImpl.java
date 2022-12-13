@@ -16,8 +16,10 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     @Transactional
     @Override
     public void add(String familyName, String firstName, Integer age, String contractType, Integer weeklyHours, String timeOfDay, String position) {
+        System.out.println(firstName);
         Employee e = new Employee();
         e.setFamilyName(familyName);
+        System.out.println(e.getFamilyName());
         e.setFirstName(firstName);
         e.setAge(age);
         e.setContractType(contractType);
