@@ -42,7 +42,7 @@ public class PlanningServiceImpl implements PlanningService{
         Collection<EmployeeDTO> employeeDTOCollection = new ArrayList<>();
         for (Employee e :
                 planning.getEmployees()) {
-            employeeDTOCollection.add(new EmployeeDTO(e.getFamilyName(), e.getAge(), e.getContractType(), e.getWeeklyHours(), e.getTimeOfDay(), e.getPosition()));
+            employeeDTOCollection.add(new EmployeeDTO(e.getFamilyName(), e.getFirstName(), e.getAge(), e.getContractType(), e.getWeeklyHours(), e.getTimeOfDay(), e.getPosition()));
         }
         return new PlanningDTO(planning.getId(), planning.getTotalHours(), morningHours, eveningHours, morningEmployees.size(), eveningEmployees.size(), employeeDTOCollection);
     }
