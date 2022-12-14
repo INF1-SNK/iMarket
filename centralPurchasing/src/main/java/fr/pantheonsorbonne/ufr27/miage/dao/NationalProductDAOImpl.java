@@ -33,7 +33,7 @@ public class NationalProductDAOImpl implements NationalProductDAO {
         NationalProduct nationalProduct = findByName(name);
         Quantity q = nationalProduct.getQuantity();
         int base = q.getQuantity();
-        q.setQuantity(base-qty);
+        q.setQuantity(base+qty);
         nationalProduct.setQuantity(q);
         em.persist(nationalProduct);
         em.flush();

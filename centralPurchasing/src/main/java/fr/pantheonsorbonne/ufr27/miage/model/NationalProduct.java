@@ -2,6 +2,8 @@ package fr.pantheonsorbonne.ufr27.miage.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Entity
 public class NationalProduct {
@@ -28,6 +30,31 @@ public class NationalProduct {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "nationalstock_id")
     private NationalStock nationalstock;
+
+    @ManyToMany
+    @JoinTable(name = "Product_Command",
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "command_id"))
+    private Set<fr.pantheonsorbonne.ufr27.miage.model.Command> commands = new LinkedHashSet<>();
+
+    public NationalProduct(String name, Double price, String type, Quantity quantity, NationalStock nationalstock) {
+        this.name = name;
+        this.price = price;
+        this.type = type;
+        this.quantity = quantity;
+        this.nationalstock = nationalstock;
+    }
+
+    public NationalProduct() {
+    }
+
+    public Set<fr.pantheonsorbonne.ufr27.miage.model.Command> getCommands() {
+        return commands;
+    }
+
+    public void setCommands(Set<fr.pantheonsorbonne.ufr27.miage.model.Command> commands) {
+        this.commands = commands;
+    }
 
     public NationalStock getNationalstock() {
         return nationalstock;

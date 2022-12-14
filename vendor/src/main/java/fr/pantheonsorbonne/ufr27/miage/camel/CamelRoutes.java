@@ -36,8 +36,6 @@ public class CamelRoutes extends RouteBuilder {
                 .setHeader("success", simple("false"))
                 .setBody(simple("there was an error during the treatment. Please try again"));
 
-        from("direct:testProd").marshal().jacksonxml().to("jms:topic:CACommands/"+jmsPrefix);
-
         from("jms:topic:CACommands/"+jmsPrefix)
                 .log("commande - ${body}")
                 .unmarshal().jacksonxml(ProductDTO.class)
@@ -45,9 +43,7 @@ public class CamelRoutes extends RouteBuilder {
                 .marshal().jacksonxml()
                 .to(ExchangePattern.InOut, "jms:queue:vendorInfos/"+jmsPrefix);
 
-
-
-        from("jms:queue:CAToVendorCommand/"+jmsPrefix)
+        from("jms:queue:vendorInfos/"+jmsPrefix)
                 .unmarshal().jacksonxml(CommandDTO.class)
                 .bean(commandHandler, "sendCommand")
                 .marshal().json()
