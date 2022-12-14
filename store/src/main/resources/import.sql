@@ -35,12 +35,8 @@ VALUES
 INSERT INTO Product (name, price, type)
 VALUES
     ("avocado",0.89,"fruit"),
-    ("pear",1.99,"fruit"),
-    ("chicory",1.79,"fruit"),
-    ("tomato",2.99,"fruit"),
-    ("guinea fowl",6.99,"meat"),
-    ("salmon",8.99,"fish"),
-    ("pork", 7.39,"meat");
+    ("cucumber",1.99,"vegetable"),
+    ("beef",1.79,"meat");
 
 INSERT INTO StoreStock(id,store_num)
 VALUES
@@ -50,6 +46,4 @@ INSERT INTO StoreStock_Product(storestock_id, product_id, quantity)
 VALUES
     (1,1,150),
     (1,2,550),
-    (1,3,82),
-    (1,4,105),
-    (1,5,100);
+    (1,3,82);

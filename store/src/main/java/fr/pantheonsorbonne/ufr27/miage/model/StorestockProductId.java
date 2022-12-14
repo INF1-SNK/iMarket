@@ -12,20 +12,12 @@ import java.util.Objects;
 public class StorestockProductId implements Serializable {
     private static final long serialVersionUID = -2410685867410799581L;
     @NotNull
-    @Column(name = "product_id", nullable = false)
-    private Integer productId;
-
-    @NotNull
     @Column(name = "storestock_id", nullable = false)
     private Integer storestockId;
 
-    public Integer getProductId() {
-        return productId;
-    }
-
-    public void setProductId(Integer productId) {
-        this.productId = productId;
-    }
+    @NotNull
+    @Column(name = "product_id", nullable = false)
+    private Integer productId;
 
     public Integer getStorestockId() {
         return storestockId;
@@ -33,6 +25,14 @@ public class StorestockProductId implements Serializable {
 
     public void setStorestockId(Integer storestockId) {
         this.storestockId = storestockId;
+    }
+
+    public Integer getProductId() {
+        return productId;
+    }
+
+    public void setProductId(Integer productId) {
+        this.productId = productId;
     }
 
     @Override
