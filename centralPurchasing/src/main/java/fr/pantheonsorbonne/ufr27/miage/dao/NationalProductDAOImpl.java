@@ -31,8 +31,10 @@ public class NationalProductDAOImpl implements NationalProductDAO {
     @Override
     public void refreshQty(String name, int qty) {
         NationalProduct nationalProduct = findByName(name);
-        int base = nationalProduct.getQuantity().getQuantity();
-        nationalProduct.getQuantity().setQuantity(base-qty);
+        Quantity q = nationalProduct.getQuantity();
+        int base = q.getQuantity();
+        q.setQuantity(base-qty);
+        nationalProduct.setQuantity(q);
         em.persist(nationalProduct);
         em.flush();
     }

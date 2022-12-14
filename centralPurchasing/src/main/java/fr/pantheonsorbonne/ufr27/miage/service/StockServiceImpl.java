@@ -41,8 +41,8 @@ public class StockServiceImpl implements StockService {
             for (ProductDTO p :
                     product) {
                 if (productDAO.checkProductQuantity(p.getName()) > 200) {
-                    productDAO.refreshQty(p.getName(), 200);
                     camelContext.createProducerTemplate().sendBody("direct:sendCommandToStore", p);
+                    productDAO.refreshQty(p.getName(), 200);
                 } else {
                     camelContext.createProducerTemplate().sendBody("direct:sendCommandToVendor", p);
                 }
