@@ -10,4 +10,7 @@ public interface StockService {
      void verifyStock(StoreStockDTO storeStockDTO);
      void sendProducts(Collection<ProductDTO> product);
 
+    void sendFromVendor(ProductDTO p, int qty);
+
+    void sendFromStock(ProductDTO p);
 }

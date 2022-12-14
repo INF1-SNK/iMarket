@@ -40,17 +40,14 @@ public class ProductServiceImpl implements ProductService {
     public CommandDTO sendCommand(CommandDTO commandDTO) throws CommandException {
         switch (vendorType) {
             case 0:
-                Map<ProductDTO, Integer> map = new HashMap<>();
-                map.put(new ProductDTO("beef", "meat", pricing), 1000);
-                return new CommandDTO(map);
+                ProductDTO p = new ProductDTO("beef", "meat", pricing);
+                return new CommandDTO(p, 1000);
             case 1:
-                Map<ProductDTO, Integer> map1 = new HashMap<>();
-                map1.put(new ProductDTO("avocado", "fruit", pricing), 1000);
-                return new CommandDTO(map1);
+                ProductDTO p1 = new ProductDTO("avocado", "fruit", pricing);
+                return new CommandDTO(p1, 1000);
             case 2:
-                Map<ProductDTO, Integer> map2 = new HashMap<>();
-                map2.put(new ProductDTO("cucumber", "vegetable", pricing), 1000);
-                return new CommandDTO(map2);
+                ProductDTO p2 = new ProductDTO("cucumber", "vegetable", pricing);
+                return new CommandDTO(p2, 1000);
         }
         throw new CommandException();
     }

@@ -1,23 +1,37 @@
 package fr.pantheonsorbonne.ufr27.miage.dto;
 
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Collection;
 import java.util.Map;
 
+@XmlRootElement
 public class CommandDTO {
-    private Map<ProductDTO, Integer> products;
+    private ProductDTO productDTO;
 
-    public CommandDTO(Map<ProductDTO, Integer> products) {
-        this.products = products;
+    private Integer quantity;
+
+
+    public CommandDTO(ProductDTO productDTO, Integer quantity) {
+        this.productDTO = productDTO;
+        this.quantity = quantity;
     }
 
     public CommandDTO() {
     }
 
-    public Map<ProductDTO, Integer> getProducts() {
-        return products;
+    public ProductDTO getProductDTO() {
+        return productDTO;
     }
 
-    public void setProducts(Map<ProductDTO, Integer> products) {
-        this.products = products;
+    public void setProductDTO(ProductDTO productDTO) {
+        this.productDTO = productDTO;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
     }
 }

@@ -28,7 +28,7 @@ public class PlanningResource {
     public PlanningDTO getPlanningById(@PathParam("planningId") int planningId) {
 
         if (planningService.getPlanningById(planningId) == null){
-            throw new NotFoundException();
+            throw new WebApplicationException(404);
         }
         return planningService.getPlanningById(planningId);
     }
