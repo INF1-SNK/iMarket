@@ -37,6 +37,7 @@ public class StockProducer implements Runnable {
     @ConfigProperty(name = "fr.pantheonsorbonne.ufr27.miage.storeId")
     Integer storeId;
 
+
     //Planificateur de tache
     private final ScheduledExecutorService scheduler = new ScheduledThreadPoolExecutor(1);
 
@@ -51,6 +52,6 @@ public class StockProducer implements Runnable {
     //Envoie du stock du magasin vers la queue "direct:statut"
     @Override
     public void run() {
-        context.createProducerTemplate().sendBody("direct:statut",storeStockService.getStockFromProductByID(storeId)); //TODO : injecter la propriété id
+        context.createProducerTemplate().sendBody("direct:statut",storeStockService.getStockFromProductByID(storeId));
     }
 }

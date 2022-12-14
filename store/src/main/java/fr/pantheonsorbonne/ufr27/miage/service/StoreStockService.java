@@ -8,4 +8,6 @@ public interface StoreStockService {
     StoreStockDTO getStockFromProductByID(int id);
 
     void updateStockOfProduct(ProductDTO p);
+
+    void quantityScheduler(ProductDTO p);
 }

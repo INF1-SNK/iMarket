@@ -3,7 +3,6 @@ package fr.pantheonsorbonne.ufr27.miage.dao;
 import fr.pantheonsorbonne.ufr27.miage.model.Product;
 import fr.pantheonsorbonne.ufr27.miage.model.StoreStock;
 import fr.pantheonsorbonne.ufr27.miage.model.StorestockProduct;
-import fr.pantheonsorbonne.ufr27.miage.model.StorestockProductId;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.EntityManager;
@@ -51,7 +50,6 @@ public class StoreStockDAOImpl implements StoreStockDAO {
 
         int base = sp.getQuantity();
         sp.setQuantity(base+qty);
-
         em.persist(sp);
         em.flush();
     }

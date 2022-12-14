@@ -18,6 +18,9 @@ public class StoreStockServiceImpl implements StoreStockService {
     @ConfigProperty(name = "fr.pantheonsorbonne.ufr27.miage.storeId")
     Integer storeId;
 
+    @ConfigProperty(name = "fr.pantheonsorbonne.ufr27.miage.quantity")
+    Integer quantity;
+
 
     @Override
     public StoreStockDTO getStockFromProductByID(int id) {
@@ -26,6 +29,11 @@ public class StoreStockServiceImpl implements StoreStockService {
 
     @Override
     public void updateStockOfProduct(ProductDTO p) {
-        storeStock.updateStockOfProduct(p.getName(), 200);
+        storeStock.updateStockOfProduct(p.getName(), quantity);
+    }
+
+    @Override
+    public void quantityScheduler(ProductDTO p) {
+        storeStock.updateStockOfProduct(p.getName(), -3);
     }
 }
