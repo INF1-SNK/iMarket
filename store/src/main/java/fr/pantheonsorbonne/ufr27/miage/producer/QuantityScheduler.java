@@ -46,7 +46,6 @@ public class QuantityScheduler implements Runnable {
 
         @Override
         public void run() {
-<
                 storeStockService.quantityScheduler();
         }
 
