@@ -5,9 +5,9 @@ VALUES
 
 INSERT INTO Quantity(quantity)
 VALUES
-    (100),
-    (100),
-    (100);
+    (10000),
+    (10000),
+    (10000);
 
 INSERT INTO NationalProduct (nationalstock_id,name, price, type, quantity_id)
 VALUES

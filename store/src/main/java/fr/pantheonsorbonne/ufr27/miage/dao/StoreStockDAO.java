@@ -12,4 +12,5 @@ public interface StoreStockDAO {
     @Transactional
     void updateStockOfProduct(String productName, int qty);
 
+    int getStockOfProduct(String productName);
 }

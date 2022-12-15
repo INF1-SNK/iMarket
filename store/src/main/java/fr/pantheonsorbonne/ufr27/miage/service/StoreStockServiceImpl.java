@@ -36,6 +36,9 @@ public class StoreStockServiceImpl implements StoreStockService {
 
     @Override
     public void quantityScheduler() {
-        storeStock.updateStockOfProduct("avocado", -5);
+        storeStock.updateStockOfProduct("avocado", -15);
+        storeStock.updateStockOfProduct("cucumber", -10);
+        storeStock.updateStockOfProduct("beef", -5);
+
     }
 }

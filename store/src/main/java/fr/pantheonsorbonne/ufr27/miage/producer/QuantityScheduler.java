@@ -46,7 +46,6 @@ public class QuantityScheduler implements Runnable {
 
         @Override
         public void run() {
-                System.out.println("moins 3 concombre --");
                 storeStockService.quantityScheduler();
         }
 
