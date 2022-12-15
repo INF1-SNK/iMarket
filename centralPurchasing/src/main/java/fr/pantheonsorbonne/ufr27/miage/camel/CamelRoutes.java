@@ -1,17 +1,15 @@
 package fr.pantheonsorbonne.ufr27.miage.camel;
 
 
-import fr.pantheonsorbonne.ufr27.miage.dao.NoSuchTicketException;
-import fr.pantheonsorbonne.ufr27.miage.dto.Booking;
-import fr.pantheonsorbonne.ufr27.miage.dto.ETicket;
-import fr.pantheonsorbonne.ufr27.miage.exception.CustomerNotFoundException;
-import fr.pantheonsorbonne.ufr27.miage.exception.ExpiredTransitionalTicketException;
-import fr.pantheonsorbonne.ufr27.miage.exception.UnsuficientQuotaForVenueException;
-import fr.pantheonsorbonne.ufr27.miage.service.TicketingService;
+import fr.pantheonsorbonne.ufr27.miage.dto.CommandDTO;
+import fr.pantheonsorbonne.ufr27.miage.dto.ProductDTO;
+import fr.pantheonsorbonne.ufr27.miage.dto.StoreStockDTO;
+import fr.pantheonsorbonne.ufr27.miage.service.ProductService;
+import fr.pantheonsorbonne.ufr27.miage.service.StockService;
+import org.apache.camel.AggregationStrategy;
 import org.apache.camel.CamelContext;
-import org.apache.camel.CamelExecutionException;
 import org.apache.camel.Exchange;
-import org.apache.camel.Processor;
+import org.apache.camel.ExchangePattern;
 import org.apache.camel.builder.RouteBuilder;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
@@ -26,69 +24,67 @@ public class CamelRoutes extends RouteBuilder {
     String jmsPrefix;
 
     @Inject
-    BookingGateway bookingHandler;
-
-    @Inject
-    TicketingService ticketingService;
-
-    @Inject
     CamelContext camelContext;
+
+    @Inject
+    StockService StockService;
+
+    @Inject
+    ProductService productService;
+
+    @Inject
+    CommandGateway commandGateway;
 
     @Override
     public void configure() throws Exception {
 
         camelContext.setTracing(true);
 
-        onException(ExpiredTransitionalTicketException.class)
-                .handled(true)
-                .process(new ExpiredTransitionalTicketProcessor())
-                .setHeader("success", simple("false"))
-                .log("Clearning expired transitional ticket ${body}")
-                .bean(ticketingService, "cleanUpTransitionalTicket");
+        from("jms:queue:statutStockStore/" + jmsPrefix)
+                .log("statut stock recu - ${body}")
+                .unmarshal().json(StoreStockDTO.class)
+                .bean(StockService, "verifyStock");
 
-        onException(UnsuficientQuotaForVenueException.class)
-                .handled(true)
-                .setHeader("success", simple("false"))
-                .setBody(simple("Vendor has not enough quota for this venue"));
-
-
-        onException(NoSuchTicketException.class)
-                .handled(true)
-                .setHeader("success", simple("false"))
-                .setBody(simple("Ticket has expired"));
-
-        onException(CustomerNotFoundException.NoSeatAvailableException.class)
-                .handled(true)
-                .setHeader("success", simple("false"))
-                .setBody(simple("No seat is available"));
-
-
-        from("jms:" + jmsPrefix + "booking?exchangePattern=InOut")//
-                .log("ticker received: ${in.headers}")//
-                .unmarshal().json(Booking.class)//
-                .bean(bookingHandler, "book").marshal().json()
-        ;
-
-
-        from("jms:" + jmsPrefix + "ticket?exchangePattern=InOut")
-                .unmarshal().json(ETicket.class)
-                .bean(ticketingService, "emitTicket").marshal().json();
-
-
-        from("direct:ticketCancel")
+        from("direct:sendCommandToStore")
                 .marshal().json()
-                .to("jms:topic:" + jmsPrefix + "cancellation");
+                .to("jms:queue:sendCommandToStore/"+jmsPrefix);
 
+        from("direct:sendCommandToVendor")
+                .marshal().jacksonxml()
+                .to("jms:topic:CACommands/"+jmsPrefix);
+
+        from("jms:queue:vendorInfos/"+jmsPrefix+"?exchangePattern=InOut")
+                .unmarshal().jacksonxml(ProductDTO.class)
+                .log("information ${body}")
+                .aggregate(new PriceStrategy()).constant(true)
+                .completionTimeout(500L)
+                .bean(productService, "createCommand")
+                .marshal().jacksonxml()
+                .to(ExchangePattern.InOut, "jms:queue:vendorInfos/"+jmsPrefix);
+
+        from("jms:queue:vendorEmit/"+jmsPrefix)
+                .unmarshal().json(CommandDTO.class)
+                .bean(commandGateway, "updateStocks");
     }
 
-    private static class ExpiredTransitionalTicketProcessor implements Processor {
+    private class PriceStrategy implements AggregationStrategy {
+
         @Override
-        public void process(Exchange exchange) throws Exception {
-            //https://camel.apache.org/manual/exception-clause.html
-            CamelExecutionException caused = (CamelExecutionException) exchange.getProperty(Exchange.EXCEPTION_CAUGHT, Throwable.class);
-
-
-            exchange.getMessage().setBody(((ExpiredTransitionalTicketException) caused.getCause()).getExpiredTicketId());
+        public Exchange aggregate(Exchange oldExchange, Exchange newExchange) {
+            ProductDTO newBody = (ProductDTO) newExchange.getIn().getBody();
+            ProductDTO productDto = null;
+            if (oldExchange == null) {
+                newExchange.getIn().setBody(newBody);
+                return newExchange;
+            } else {
+                ProductDTO p = (ProductDTO) oldExchange.getIn().getBody();
+                if(p.getPrice()<productDto.getPrice()){
+                    return oldExchange;
+                }
+                oldExchange.getIn().setBody(productDto);
+                return oldExchange;
+            }
         }
+
     }
 }

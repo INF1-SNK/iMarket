@@ -39,7 +39,7 @@
     <dependencies>
         <dependency>
             <groupId>fr.pantheonsorbonne.ufr27.miage</groupId>
-            <artifactId>ticket-commons</artifactId>
+            <artifactId>imarket-commons</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
@@ -87,6 +87,10 @@
             <artifactId>camel-quarkus-bean</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.apache.camel.quarkus</groupId>
+            <artifactId>camel-quarkus-csv</artifactId>
+        </dependency>
+        <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-hibernate-validator</artifactId>
         </dependency>
@@ -103,6 +107,10 @@
             <artifactId>camel-quarkus-jackson</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.apache.camel.quarkus</groupId>
+            <artifactId>camel-quarkus-jacksonxml</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
             <version>31.0.1-jre</version>
@@ -117,6 +125,11 @@
             <groupId>io.rest-assured</groupId>
             <artifactId>rest-assured</artifactId>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-core-processor</artifactId>
+            <version>3.12.0</version>
         </dependency>
     </dependencies>
     <build>
