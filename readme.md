@@ -28,4 +28,11 @@ Le Fournisseur reçoit un fichier XML contenant la liste des produits à envoyer
 
 ### Diagramme de classe
 
-![Séparation en 4 microservices](diagramme_classe_init.jpg)
+## Store
+![Store](DL_STORE.PNG)
+
+## Human Resources
+![HR](DL_HR.PNG)
+
+## Central Purchasing
+![CP](DL_CP.PNG)
