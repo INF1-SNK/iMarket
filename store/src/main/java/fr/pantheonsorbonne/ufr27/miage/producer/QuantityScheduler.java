@@ -37,18 +37,17 @@ public class QuantityScheduler implements Runnable {
         private final ScheduledExecutorService scheduler = new ScheduledThreadPoolExecutor(1);
 
         void onStart(@Observes StartupEvent ev) {
-            scheduler.scheduleAtFixedRate(this, 0L, 2L, TimeUnit.SECONDS);
+            scheduler.scheduleAtFixedRate(this, 0L, 10L, TimeUnit.SECONDS);
         }
 
         void onStop(@Observes ShutdownEvent ev) {
             scheduler.shutdown();
         }
 
-
         @Override
         public void run() {
-                ProductDTO p = productService.getProductById("1");
-                storeStockService.quantityScheduler(p);
+<
+                storeStockService.quantityScheduler();
         }
 
 

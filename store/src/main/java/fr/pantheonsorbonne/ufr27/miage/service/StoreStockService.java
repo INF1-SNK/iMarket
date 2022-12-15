@@ -9,5 +9,5 @@ public interface StoreStockService {
 
     void updateStockOfProduct(ProductDTO p);
 
-    void quantityScheduler(ProductDTO p);
+    void quantityScheduler();
 }

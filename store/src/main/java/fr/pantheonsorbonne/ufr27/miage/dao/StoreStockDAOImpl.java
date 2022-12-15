@@ -53,4 +53,17 @@ public class StoreStockDAOImpl implements StoreStockDAO {
         em.persist(sp);
         em.flush();
     }
+
+    @Override
+    public int getStockOfProduct(String productName) {
+        Product p = (Product) em.createQuery("SELECT p FROM Product p WHERE p.name = ?1").setParameter(1, productName).getResultList().get(0);
+        StoreStock stock = get(1);
+        StorestockProduct sp = (StorestockProduct) em.createQuery("select sp from StorestockProduct sp where sp.product = ?1 and sp.storestock = ?2")
+                .setParameter(1, p)
+                .setParameter(2, stock)
+                .getResultList().get(0);
+
+        return sp.getQuantity();
+
+    }
 }

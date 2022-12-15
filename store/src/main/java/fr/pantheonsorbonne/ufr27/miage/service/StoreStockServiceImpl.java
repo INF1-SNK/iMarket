@@ -13,6 +13,8 @@ public class StoreStockServiceImpl implements StoreStockService {
 
     @Inject
     StoreStockDAO storeStock;
+    @Inject
+    ProductService productService;
 
 
     @ConfigProperty(name = "fr.pantheonsorbonne.ufr27.miage.storeId")
@@ -33,7 +35,10 @@ public class StoreStockServiceImpl implements StoreStockService {
     }
 
     @Override
-    public void quantityScheduler(ProductDTO p) {
-        storeStock.updateStockOfProduct(p.getName(), -3);
+    public void quantityScheduler() {
+        storeStock.updateStockOfProduct("avocado", -15);
+        storeStock.updateStockOfProduct("cucumber", -10);
+        storeStock.updateStockOfProduct("beef", -5);
+
     }
 }

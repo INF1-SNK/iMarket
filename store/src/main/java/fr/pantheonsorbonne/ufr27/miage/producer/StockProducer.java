@@ -42,7 +42,7 @@ public class StockProducer implements Runnable {
     private final ScheduledExecutorService scheduler = new ScheduledThreadPoolExecutor(1);
 
     void onStart(@Observes StartupEvent ev) {
-        scheduler.scheduleAtFixedRate(this, 0L, 30L, TimeUnit.SECONDS);
+        scheduler.scheduleAtFixedRate(this, 0L, 15L, TimeUnit.SECONDS);
     }
 
     void onStop(@Observes ShutdownEvent ev) {
