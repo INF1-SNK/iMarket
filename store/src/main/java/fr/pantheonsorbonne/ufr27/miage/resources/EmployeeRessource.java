@@ -1,8 +1,5 @@
 package fr.pantheonsorbonne.ufr27.miage.resources;
 
-import fr.pantheonsorbonne.ufr27.miage.dto.EmployeeDTO;
-import fr.pantheonsorbonne.ufr27.miage.model.Employee;
-import fr.pantheonsorbonne.ufr27.miage.service.EmployeeService;
 import fr.pantheonsorbonne.ufr27.miage.service.EmployeeServiceImpl;
 
 import javax.inject.Inject;
@@ -12,8 +9,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.net.URI;
-import java.util.List;
-import java.util.function.Consumer;
 
 @Path("employee")
 public class EmployeeRessource {

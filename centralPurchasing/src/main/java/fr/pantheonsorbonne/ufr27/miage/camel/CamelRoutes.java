@@ -8,7 +8,6 @@ import fr.pantheonsorbonne.ufr27.miage.service.ProductService;
 import fr.pantheonsorbonne.ufr27.miage.service.StockService;
 import org.apache.camel.AggregationStrategy;
 import org.apache.camel.CamelContext;
-import org.apache.camel.processor.aggregate.AbstractListAggregationStrategy;
 import org.apache.camel.Exchange;
 import org.apache.camel.ExchangePattern;
 import org.apache.camel.builder.RouteBuilder;
@@ -16,8 +15,6 @@ import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import java.util.ArrayList;
-import java.util.Map;
 
 @ApplicationScoped
 public class CamelRoutes extends RouteBuilder {

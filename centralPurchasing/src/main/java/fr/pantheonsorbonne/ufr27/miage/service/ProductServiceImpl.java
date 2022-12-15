@@ -2,7 +2,6 @@ package fr.pantheonsorbonne.ufr27.miage.service;
 
 import fr.pantheonsorbonne.ufr27.miage.dao.CommandDAO;
 import fr.pantheonsorbonne.ufr27.miage.dao.NationalProductDAO;
-import fr.pantheonsorbonne.ufr27.miage.dao.NationalProductDAOImpl;
 import fr.pantheonsorbonne.ufr27.miage.dto.CommandDTO;
 import fr.pantheonsorbonne.ufr27.miage.dto.ProductDTO;
 import fr.pantheonsorbonne.ufr27.miage.model.Command;
@@ -11,9 +10,7 @@ import fr.pantheonsorbonne.ufr27.miage.model.NationalProduct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import java.time.LocalDate;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 
 @ApplicationScoped
 public class ProductServiceImpl implements ProductService{

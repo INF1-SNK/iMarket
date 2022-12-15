@@ -19,14 +19,9 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-//Classe:Singleton
-//StockProducer implemente l'interface Runnable qui s'execute sous un scheduler
 @ApplicationScoped
 public class StockProducer implements Runnable {
 
-    //Recuperation grace a CDI d'une fabrique de connexions JMS
-    @Inject
-    ConnectionFactory connectionFactory;
 
     @Inject
     StoreStockService storeStockService;

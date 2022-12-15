@@ -1,14 +1,11 @@
 package fr.pantheonsorbonne.ufr27.miage.resources;
 
-import fr.pantheonsorbonne.ufr27.miage.dto.CvDTO;
 import fr.pantheonsorbonne.ufr27.miage.dto.PlanningDTO;
-import fr.pantheonsorbonne.ufr27.miage.exception.PlanningNotFoundException;
 import fr.pantheonsorbonne.ufr27.miage.service.PlanningService;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import java.util.List;
 
 @Path("planning")
 public class PlanningResource {

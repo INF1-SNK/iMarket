@@ -26,11 +26,6 @@ public class QuantityScheduler implements Runnable {
         @Inject
         StoreStockService storeStockService;
 
-        @Inject
-        ProductService productService;
-
-        @Inject
-        CamelContext context;
 
 
         //Planificateur de tache
