@@ -17,7 +17,7 @@ public class CandidatureRessources {
     protected CandidatureService service;
 
 
-    @Path("show")
+    @Path("listcv")
     @GET
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public List<CvDTO> getCv() {

@@ -6,6 +6,5 @@ public interface ProductService {
 
     ProductDTO getProductById(String id);
 
-    ProductDTO getRandomProduct();
 
 }

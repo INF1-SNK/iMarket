@@ -17,7 +17,6 @@ public class CandidatureServiceImpl implements CandidatureService {
     @RestClient
     CandidatureHRService candidatureHRService;
 
-    //Verifie si on envoi ou pas les cv
     @Override
     public Collection<CvDTO> sendCandidatAccepted() {
         if(candidatureHRService.getCv().size() == 0){
@@ -26,8 +25,7 @@ public class CandidatureServiceImpl implements CandidatureService {
         return chooseCV();
     }
 
-    //Selectionner les Cv retenu
-    public Collection<CvDTO> chooseCV(){
+    private Collection<CvDTO> chooseCV(){
 
         Collection<CvDTO> candidatures = new LinkedList<>();
         for (CvDTO cv : candidatureHRService.getCv()) {

@@ -24,7 +24,7 @@ Le Fournisseur reçoit un fichier XML contenant la liste des produits à envoyer
 ### Hypothèses
 
 -	Le fournisseur possède un stock infini.
--	La demande de candidature est importante et on nécessite une demande de réponse direct pour avoir une communication synchrone.
+-	La demande de candidature est importante et on nécessite une demande de réponse directe pour avoir une communication synchrone.
 
 ### Diagramme de classe
 
@@ -36,3 +36,6 @@ Le Fournisseur reçoit un fichier XML contenant la liste des produits à envoyer
 
 ## Central Purchasing
 ![CP](DL_CP.PNG)
+
+### Diagramme de séquence
+![](DSS_iMarket.png)

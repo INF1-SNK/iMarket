@@ -12,7 +12,7 @@ import java.util.List;
 @RegisterRestClient(configKey = "HR")
 public interface CandidatureHRService {
 
-    @Path("show")
+    @Path("listcv")
     @GET
     List<CvDTO> getCv();
 }

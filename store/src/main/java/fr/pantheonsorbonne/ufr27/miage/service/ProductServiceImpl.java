@@ -18,9 +18,4 @@ public class ProductServiceImpl implements ProductService {
          Product p = productDAO.getProductByID(id);
          return new ProductDTO(p.getName(), p.getType(), p.getPrice());
     }
-
-    @Override
-    public ProductDTO getRandomProduct() {
-        return null;
-    }
 }
